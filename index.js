@@ -90,7 +90,9 @@ app.delete('/user/:id', async (req, res) => {
   }
 });
 
-// Start server on port 4000
-app.listen(4000, '127.0.0.1', () => {
-  console.log('Server running at http://127.0.0.1:4000');
+// Start server
+const PORT = process.env.PORT || 4000;
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
 });
