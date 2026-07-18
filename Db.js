@@ -1,10 +1,10 @@
-const pg = require('pg');
-const con = new pg.Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'pune',
-  password: 'Jiyanpostgres@5195',
-  port: 5432, // default PostgreSQL port
+const { Pool } = require('pg');
+
+const con = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
-module.exports = con; 
+module.exports = con;
