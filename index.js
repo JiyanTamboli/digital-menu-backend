@@ -41,15 +41,31 @@ app.get('/user/:id', async (req, res) => {
 // Add new menu item
 app.post('/addMenu', async (req, res) => {
   try {
-    const { name, description, price, category, spicy_level } = req.body;
+    const {
+      name,
+      description,
+      price,
+      category,
+      spicy_level,
+      availability_status
+    } = req.body;
+
     const result = await con.query(
-      'INSERT INTO DigiMenu (name, description, price, category, spicy_level) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [name, description, price, category, spicy_level]
+      `INSERT INTO DigiMenu
+      (name, description, price, category, spicy_level, availability_status)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING *`,
+      [name, description, price, category, spicy_level, availability_status]
     );
-    res.status(201).json({ status: 'Success', menu: result.rows[0] });
+
+    res.status(201).json({
+      status: "Success",
+      menu: result.rows[0]
+    });
+
   } catch (error) {
-    console.error('Error adding menu item:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error adding menu item:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
